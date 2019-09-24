@@ -1,0 +1,96 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.16.RELEASE'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: "war"
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.addcel'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+// tag::wsdl[]
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "${projectDir}/src/main/resources/wsdl/srvproceso.wsdl"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask", classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, schema: schema, binding: "${projectDir}/src/main/resources/wsdl/binding.xml", package: "puntoweb.autoriza.wsdl") {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+                    debugLevel: "lines,vars,source",
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+// end::wsdl[]
+
+configurations {
+    jaxb
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testCompile 'org.springframework.security:spring-security-test'
+    testCompile 'com.h2database:h2'
+    providedRuntime 'javax.servlet:servlet-api:2.5'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    testCompileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.8'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.8'
+    compile 'org.springframework.ws:spring-ws-core'
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile("org.bouncycastle:bcprov-jdk15:1.46")
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
+
+war {
+    archiveName = 'PuntoWeb.war'
+
+    from genJaxb.classesDir
+}
+
+
+

@@ -1,0 +1,19 @@
+<Autorizacion>
+    <marca/>
+    <comercio/>
+    <referencia>AB529314382</referencia>
+    <monto>P805ftvwVPU%3D</monto>
+    <moneda>USD</moneda>
+    <tarjeta>aGga8T6h2P33qs3hoEL4Uk4MU5OyZICG</tarjeta>
+    <cvc>bxbX51%2Fp%2B6U%3D</cvc>
+    <fechaExp>GU3d%2FxcoP1A%3D</fechaExp>
+    <fecha></fecha>
+    <hora>230545</hora>
+    <diferido>0</diferido>
+    <cuotas>00</cuotas>
+    <tipoProceso>AT</tipoProceso>
+    <autogenerador>AB609519099</autogenerador>
+    <comercioFacilitador/>
+    <dataEnc></dataEnc>
+    <firma/>
+</Autorizacion>

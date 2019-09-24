@@ -1,0 +1,128 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Body>
+        <AutorizaResponse xmlns="http://tempuri.org/">
+            <AutorizaResult><?xml version="1.0" encoding="UTF-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                               xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                    <soap:Body>
+
+                        <Autorizacion>
+
+                            <Marca>MC</Marca>
+
+                            <Resultado>D</Resultado>
+
+                            <CodAutoriza></CodAutoriza>
+
+                            <ReferenciaPMP></ReferenciaPMP>
+
+                            <Cuotas></Cuotas>
+
+                            <FecPrimeraCuota></FecPrimeraCuota>
+
+                            <MonedaCuota></MonedaCuota>
+
+                            <MontoCuota></MontoCuota>
+
+                            <Moneda></Moneda>
+
+                            <Monto></Monto>
+
+                            <Referencia>AB529314382</Referencia>
+
+                            <Fecha>20190606</Fecha>
+
+                            <Hora>230668</Hora>
+
+                            <CodRespuesta>FE</CodRespuesta>
+
+                            <CodPais></CodPais>
+
+                            <Tarjeta></Tarjeta>
+
+                            <Mensaje>El formato a ingresar debe ser mes y año (MMAA)</Mensaje>
+
+                            <IdTxn></IdTxn>
+
+                            <Comercio>4007654</Comercio>
+
+                            <DataEnc></DataEnc>
+
+                            <Firma></Firma>
+
+                        </Autorizacion>
+                    </soap:Body>
+                </soap:Envelope>
+            </AutorizaResult>
+        </AutorizaResponse>
+    </s:Body>
+</s:Envelope>
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+<s:Body>
+    <AutorizaResponse xmlns="http://tempuri.org/">
+        <AutorizaResult><?xml version="1.0" encoding="UTF-8"?>
+            <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                           xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                <soap:Body>
+                    <Autorizacion>
+                        <Marca>MC</Marca>
+                        <Resultado>D</Resultado>
+                        <CodAutoriza></CodAutoriza>
+                        <ReferenciaPMP></ReferenciaPMP>
+                        <Cuotas></Cuotas>
+                        <FecPrimeraCuota></FecPrimeraCuota>
+                        <MonedaCuota></MonedaCuota>
+                        <MontoCuota></MontoCuota>
+                        <Moneda>PEN</Moneda>
+                        <Monto></Monto>
+                        <Referencia>AB529314382</Referencia>
+                        <Fecha>20190606</Fecha>
+                        <Hora>230656</Hora>
+                        <CodRespuesta>03</CodRespuesta>
+                        <CodPais></CodPais>
+                        <Tarjeta></Tarjeta>
+                        <Mensaje></Mensaje>
+                        <IdTxn></IdTxn>
+                        <Comercio>4007654</Comercio>
+                        <DataEnc></DataEnc>
+                        <Firma></Firma>
+                    </Autorizacion>
+                </soap:Body>
+            </soap:Envelope>
+        </AutorizaResult>
+    </AutorizaResponse>
+</s:Body>
+</s:Envelope>
+
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <ns2:Autoriza xmlns:ns2="http://tempuri.org/" xmlns:ns3="http://schemas.microsoft.com/2003/10/Serialization/">
+        <ns2:xml>
+            <Autorizacion>
+                <Marca>MC</Marca>
+                <Comercio>4007654</Comercio>
+                <Referencia>AB529314382</Referencia>
+                <Monto>P805ftvwVPU%3D</Monto>
+                <Moneda>PEN</Moneda>
+                <Tarjeta>aGga8T6h2P33qs3hoEL4Uk4MU5OyZICG</Tarjeta>
+                <CVC>bxbX51%2Fp%2B6U%3D</CVC>
+                <FechaExp>GOX4%2Fy2NKbk%3D</FechaExp>
+                <Fecha>20190606</Fecha>
+                <Hora>230656</Hora>
+                <Diferido>0</Diferido>
+                <Cuotas>00</Cuotas>
+                <TipoProceso>AT</TipoProceso>
+                <Autogenerador>AB609519099</Autogenerador>
+                <ComercioFacilitador>4007425</ComercioFacilitador>
+                <DataEnc></DataEnc>
+                <Firma></Firma>
+            </Autorizacion>
+        </ns2:xml>
+    </ns2:Autoriza>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
