@@ -6,8 +6,8 @@
     </head>
 
     <body>
-        <div class="container">
-            <form method="POST" action="Url" name="form">
+        <div class="container" style="width: 50%;">
+            <form method="POST" action="https://server.punto-web.com/gateway/PWFacPagos.asp" name="form">
                 <div class="form-group">
                     <label for="I0">Marca de tarjeta</label>
                     <input type="text" name="I0" id="I0" value="MC" class="form-control" />
@@ -33,24 +33,50 @@
                     <input type="text" name="I5" id="I5" value="5455450910000856" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="I6">Tarjeta de Crédito</label>
+                    <label for="I6">Numero de CVC2</label>
                     <input type="text" name="I6" id="I6" value="315" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="I7">Tarjeta de Crédito</label>
+                    <label for="I7">Fecha de Expiración de Tarjeta</label>
                     <input type="text" name="I7" id="I7" value="1007" class="form-control" />
                 </div>
-
-
-                <input type="text" name="I8" value="20060808" />
-                <input type="text" name="I9" value="123032" />
-                <input type="text" name="I10" value="1139767890" />
-                <input type="text" name="I11" value="0" />
-                <input type="text" name="I12" value="00" />
-                <input type="text" name="I13" value="2999994" />
-                <input type="text" name="I14" value="AT" />
-                <input type="text" name="I15" value="Data Encriptada" />
-                <input type="text" name="I16" value="Firma Digital" />
+                <div class="form-group">
+                    <label for="I8">Fecha de la Transacción. (Auxiliar 1)</label>
+                    <input type="text" name="I8" id="I8" value="20060808" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I9">Hora de la Transacción. (Auxiliar 2)</label>
+                    <input type="text" name="I9" id="I9" value="123032" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="I10">Autogenerador Aleatorio</label>
+                    <input type="text" name="I10" id="I10" value="1139767890" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I11">Diferido(Opcional)</label>
+                    <input type="text" name="I11" id="I11" value="0" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I12">Cuotas(Opcional)</label>
+                    <input type="text" name="I12" id="I12" value="00" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I13">Código de Comercio Facilitador</label>
+                    <input type="text" name="I13" id="I13" value="2999994" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I14">Tipo de Proceso</label>
+                    <input type="text" name="I14" id="I14" value="AT" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I15">Data Encriptada o Hash</label>
+                    <input type="text" name="I15" id="I15" value="Data Encriptada" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="I16">Firma Digital</label>
+                    <input type="text" name="I16" id="I16" value="Firma Digital" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </body>
