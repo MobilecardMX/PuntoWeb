@@ -11,4 +11,8 @@ public interface Constantes {
     String KEY_MERCHANT_SOLES = "KEY_MERCHANT_SOLES";
 
     String CODE_RESPUESTA_EXITO = "00";
+
+    String MONEDA_PEN = "PEN";
+    String TIPO_PROCESO_AUTORIZACION = "AT";
+    String ACTION_FORM_PARAM = "urlfacpago";
 }

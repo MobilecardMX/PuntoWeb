@@ -1,83 +1,34 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Pago PM</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    </head>
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Redirigiendo...</title>
+</head>
 
-    <body>
-        <div class="container" style="width: 50%;">
-            <form method="POST" action="https://server.punto-web.com/gateway/PWFacPagos.asp" name="form">
-                <div class="form-group">
-                    <label for="I0">Marca de tarjeta</label>
-                    <input type="text" name="I0" id="I0" value="MC" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I1">Código de Sub Comercio</label>
-                    <input type="text" name="I1" id="I1" value="9000001" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I2">Nro. de Referencia.</label>
-                    <input type="text" name="I2" id="I2" value="ORD001" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I3">Monto de la Transacción</label>
-                    <input type="text" name="I3" id="I3" value="22.50" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I4">Moneda de la Txn. Sub Comercio</label>
-                    <input type="text" name="I4" id="I4" value="PEN" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I5">Tarjeta de Crédito</label>
-                    <input type="text" name="I5" id="I5" value="5455450910000856" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I6">Numero de CVC2</label>
-                    <input type="text" name="I6" id="I6" value="315" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I7">Fecha de Expiración de Tarjeta</label>
-                    <input type="text" name="I7" id="I7" value="1007" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I8">Fecha de la Transacción. (Auxiliar 1)</label>
-                    <input type="text" name="I8" id="I8" value="20060808" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I9">Hora de la Transacción. (Auxiliar 2)</label>
-                    <input type="text" name="I9" id="I9" value="123032" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <label for="I10">Autogenerador Aleatorio</label>
-                    <input type="text" name="I10" id="I10" value="1139767890" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I11">Diferido(Opcional)</label>
-                    <input type="text" name="I11" id="I11" value="0" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I12">Cuotas(Opcional)</label>
-                    <input type="text" name="I12" id="I12" value="00" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I13">Código de Comercio Facilitador</label>
-                    <input type="text" name="I13" id="I13" value="2999994" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I14">Tipo de Proceso</label>
-                    <input type="text" name="I14" id="I14" value="AT" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I15">Data Encriptada o Hash</label>
-                    <input type="text" name="I15" id="I15" value="Data Encriptada" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="I16">Firma Digital</label>
-                    <input type="text" name="I16" id="I16" value="Firma Digital" class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </body>
+<body>
+<form method="POST" th:action="@{${urlfacpago}}" name="facpago" id="facpago">
+    <input type="hidden" name="I0" th:value="*{I0}"/>
+    <input type="hidden" name="I1" th:value="*{I1}"/>
+    <input type="hidden" name="I2" th:value="*{I2}"/>
+    <input type="hidden" name="I3" th:value="*{I3}"/>
+    <input type="hidden" name="I4" th:value="*{I4}"/>
+    <input type="hidden" name="I5" th:value="*{I5}"/>
+    <input type="hidden" name="I6" th:value="*{I6}"/>
+    <input type="hidden" name="I7" th:value="*{I7}"/>
+    <input type="hidden" name="I8" th:value="*{I8}"/>
+    <input type="hidden" name="I9" th:value="*{I9}"/>
+    <input type="hidden" name="I10" th:value="*{I10}"/>
+    <input type="hidden" name="I11" th:value="*{I11}"/>
+    <input type="hidden" name="I12" th:value="*{I12}"/>
+    <input type="hidden" name="I13" th:value="*{I13}"/>
+    <input type="hidden" name="I14" th:value="*{I14}"/>
+    <input type="hidden" name="I15" th:value="*{I15}"/>
+    <input type="hidden" name="I16" th:value="*{I16}"/>
+</form>
+<script type="text/javascript">
+    window.onload=function(){
+        document.forms["facpago"].submit();
+    }
+
+</script>
+</body>
 </html>
