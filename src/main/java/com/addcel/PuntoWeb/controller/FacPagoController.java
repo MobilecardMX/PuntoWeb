@@ -1,7 +1,7 @@
 package com.addcel.PuntoWeb.controller;
 
 import com.addcel.PuntoWeb.bean.FacPagoRequest;
-import com.addcel.PuntoWeb.security.FacPagoServiceImpl;
+import com.addcel.PuntoWeb.service.FacPagoServiceImpl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

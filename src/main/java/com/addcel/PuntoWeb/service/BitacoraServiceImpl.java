@@ -1,5 +1,6 @@
 package com.addcel.PuntoWeb.service;
 
+import com.addcel.PuntoWeb.bean.FacPagoRequestDTO;
 import com.addcel.PuntoWeb.bean.PuntoWebRequestDTO;
 import com.addcel.PuntoWeb.model.PuntoWebBitacora;
 import com.addcel.PuntoWeb.model.TBitacora;
@@ -43,7 +44,7 @@ public class BitacoraServiceImpl implements BitacoraService {
      * @param requestPuntoWeb    Request del servicio SOAP Punto Web
      */
     @Override
-    public PuntoWebBitacora saveBitacoraPuntoWeb(PuntoWebRequestDTO puntoWebRequestDTO, String requestPuntoWeb) {
+    public PuntoWebBitacora saveBitacoraPuntoWeb(PuntoWebRequestDTO puntoWebRequestDTO, String requestPuntoWeb, Integer idTBitacora) {
         log.info("Guardando bitacora en PUNTO_WEB_BITACORA...");
         PuntoWebBitacora puntoWebBitacora = new PuntoWebBitacora();
         puntoWebBitacora.setFecha(new Date());
@@ -53,11 +54,26 @@ public class BitacoraServiceImpl implements BitacoraService {
         puntoWebBitacora.setIdPais(String.valueOf(puntoWebRequestDTO.getIdPais()));
         puntoWebBitacora.setRequestEndpoint(puntoWebRequestDTO.toString());
         puntoWebBitacora.setRequestPuntoWeb(requestPuntoWeb);
-        bitacoraRepository.save(puntoWebBitacora);
-
+        puntoWebBitacora.setIdTBitacora(idTBitacora);
         //guardar en t_bitacora
+        bitacoraRepository.save(puntoWebBitacora);
+        return puntoWebBitacora;
+    }
 
-
+    @Override
+    public PuntoWebBitacora saveBitacoraPuntoWebForFacPago(FacPagoRequestDTO facPagoRequestDTO, String requestPuntoWeb, Integer idTBitacora) {
+        log.info("Guardando bitacora en PUNTO_WEB_BITACORA...");
+        PuntoWebBitacora puntoWebBitacora = new PuntoWebBitacora();
+        puntoWebBitacora.setFecha(new Date());
+        puntoWebBitacora.setDescripcion(BitacoraServiceImpl.DESCRIPCION_BITACORA);
+        puntoWebBitacora.setIdApp(facPagoRequestDTO.getIdApp());
+        puntoWebBitacora.setIdioma(facPagoRequestDTO.getIdioma());
+        puntoWebBitacora.setIdPais(String.valueOf(facPagoRequestDTO.getIdPais()));
+        puntoWebBitacora.setRequestEndpoint(facPagoRequestDTO.toString());
+        puntoWebBitacora.setRequestPuntoWeb(requestPuntoWeb);
+        puntoWebBitacora.setIdTBitacora(idTBitacora);
+        //guardar en t_bitacora
+        bitacoraRepository.save(puntoWebBitacora);
         return puntoWebBitacora;
     }
 
@@ -91,6 +107,33 @@ public class BitacoraServiceImpl implements BitacoraService {
             tBitacora.setBitCardId(puntoWebRequestDTO.getRequest().getIdTarjetaUsuario());
             tBitacora.setIdPais(puntoWebRequestDTO.getIdPais());
             tBitacora.setIdEstablecimiento(puntoWebRequestDTO.getRequest().getIdEstablecimiento() == null ? BigInteger.ZERO : puntoWebRequestDTO.getRequest().getIdEstablecimiento());
+            tBitacoraRepository.save(tBitacora);
+            log.debug("Se guardo con EXITO la bitacora!!!");
+            return tBitacora.getIdBitacora();
+        } catch (RuntimeException ex) {
+            log.error("Ocurrio un error al guardar en T_BITACORA, mensaje: " + ex.getMessage(), ex);
+            return -1;
+        }
+    }
+
+    @Override
+    public Integer saveTBitacoraForFacPago(FacPagoRequestDTO facPagoRequestDTO) {
+        log.info("Guardando bitacora en t_bitacora...");
+        TBitacora tBitacora = new TBitacora();
+        try {
+            tBitacora.setIdUsuario(facPagoRequestDTO.getRequest().getIdUsuario());
+            tBitacora.setIdAplicacion(facPagoRequestDTO.getIdApp());
+            tBitacora.setIdioma(facPagoRequestDTO.getIdioma());
+            tBitacora.setIdProveedor(ID_PROVEEDOR);
+            tBitacora.setIdProducto(ID_PRODUCTO);
+            tBitacora.setBitFecha(new Date());
+            tBitacora.setBitHora(new Timestamp(new Date().getTime()));
+            tBitacora.setBitConcepto(facPagoRequestDTO.getRequest().getConcepto());
+            tBitacora.setBitCargo(facPagoRequestDTO.getRequest().getMonto() == null ? BigDecimal.ZERO : new BigDecimal(facPagoRequestDTO.getRequest().getMonto()));
+            tBitacora.setBitComision(facPagoRequestDTO.getRequest().getComision() == null ? BigDecimal.ZERO : new BigDecimal(facPagoRequestDTO.getRequest().getComision()));
+            tBitacora.setBitCardId(facPagoRequestDTO.getRequest().getIdTarjetaUsuario());
+            tBitacora.setIdPais(facPagoRequestDTO.getIdPais());
+            tBitacora.setIdEstablecimiento(facPagoRequestDTO.getRequest().getIdEstablecimiento() == null ? BigInteger.ZERO : facPagoRequestDTO.getRequest().getIdEstablecimiento());
             tBitacoraRepository.save(tBitacora);
             log.debug("Se guardo con EXITO la bitacora!!!");
             return tBitacora.getIdBitacora();

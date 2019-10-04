@@ -3,6 +3,7 @@ package com.addcel.PuntoWeb.bean;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 @Data
 public class FacPagoRequest implements Serializable {
@@ -14,4 +15,9 @@ public class FacPagoRequest implements Serializable {
     private Integer idTarjetaUsuario;
     private String diferido;
     private String cuotas;
+
+    private String concepto;
+    private String comision;
+    private BigInteger idEstablecimiento;
+    private BigInteger idUsuario;
 }
