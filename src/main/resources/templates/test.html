@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Prueba peticion a Fac Punto Web</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script>
+        $(document).ready(function(){
+          $("#submit").click(function(event) {
+          event.preventDefault();
+          var data = {
+            marcaTarjeta: "MC",
+            monto: "100.00",
+            numeroTarjeta: "",
+            fechaVigencia: "",
+            ccv: "",
+            idTarjetaUsuario: "381",
+            diferido: "",
+            cuotas: "",
+            concepto: "Prueba de pago",
+            comision: "",
+            idEstablecimiento: "",
+            idUsuario: "8923233103990"
+          };
+
+          $.ajax({
+            url : '1/1/esp/pw-facpago',
+            data : data,
+            type : 'GET',
+            contentType: 'application/json',
+            error : function(xhr, status) {
+                alert('Disculpe, existió un problema');
+            }
+          });
+
+          });
+        });
+    </script>
+    <script src="js/jquery-3.4.1.js"></script>
+</head>
+<body>
+<div class="container">
+    <form>
+        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

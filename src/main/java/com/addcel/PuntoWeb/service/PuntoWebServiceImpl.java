@@ -160,7 +160,7 @@ public class PuntoWebServiceImpl implements PuntoWebService {
             try {
                 String xmlRequest = puntoWebUtil.serializeRequestToXML(autorizacionBeanXML);
                 // guardar en bitacora
-                PuntoWebBitacora bitacora = bitacoraService.saveBitacoraPuntoWeb(puntoWebRequestDTO, xmlRequest);
+                PuntoWebBitacora bitacora = bitacoraService.saveBitacoraPuntoWeb(puntoWebRequestDTO, xmlRequest, idTBitacora);
                 AutorizaResponse autorizaResponse = autorizacionClient.autorizacion(xmlRequest);
 
                 // deserializar XML de respuesta a Objeto Java

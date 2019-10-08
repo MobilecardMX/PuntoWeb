@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -59,7 +60,7 @@ public class FacPagoServiceImpl implements FacPagoService {
 
             model.addAttribute(AttributeModelFacPago.MARCA_TARJETA.getName(), facPagoRequestDTO.getRequest().getMarcaTarjeta());
             model.addAttribute(AttributeModelFacPago.CODIGO_SUB_COMERCION.getName(), puntoWebConfig.getComercio());
-//        model.addAttribute(AttributeModelFacPago.NUM_REFERENCIA.getName(), request.getMarcaTarjeta()); FIXME id_bitacora
+            model.addAttribute(AttributeModelFacPago.NUM_REFERENCIA.getName(), idTBitacora);
             model.addAttribute(AttributeModelFacPago.MONTO_TRANSACCION.getName(), facPagoRequestDTO.getRequest().getMonto());
             model.addAttribute(AttributeModelFacPago.MONEDA_TRANSACCION.getName(), Constantes.MONEDA_PEN);
 
@@ -85,9 +86,11 @@ public class FacPagoServiceImpl implements FacPagoService {
             model.addAttribute(AttributeModelFacPago.CUOTAS.getName(), facPagoRequestDTO.getRequest().getCuotas());
             model.addAttribute(AttributeModelFacPago.CODIGO_COMERCIAL_FACILITADOR.getName(), puntoWebConfig.getComercio());
             model.addAttribute(AttributeModelFacPago.TIPO_PROCESO.getName(), Constantes.TIPO_PROCESO_AUTORIZACION);
-            //model.addAttribute(AttributeModelFacPago.DATA_HASH.getName(), request.getMarcaTarjeta());
-            //model.addAttribute(AttributeModelFacPago.FIRMA_DIGITAL.getName(), request.getMarcaTarjeta());
+            model.addAttribute(AttributeModelFacPago.DATA_HASH.getName(), Base64.getEncoder().encode(model.toString().getBytes()));
+            model.addAttribute(AttributeModelFacPago.FIRMA_DIGITAL.getName(), Base64.getEncoder().encode("Mobilcard".getBytes()));
             model.addAttribute(Constantes.ACTION_FORM_PARAM, "https://server.punto-web.com/gateway/PWFacPagos.asp");
+
+            bitacoraService.saveBitacoraPuntoWebForFacPago(facPagoRequestDTO, model.toString(), idTBitacora);
         } else {
             throw new ServiceException("Ocurrio un error al guardar en la Bitacora", Mensajes.CODE_ERROR_TBITACORA);
         }
