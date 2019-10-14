@@ -9,6 +9,7 @@ import com.addcel.PuntoWeb.repository.TBitacoraRepository;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -130,7 +131,7 @@ public class BitacoraServiceImpl implements BitacoraService {
             tBitacora.setBitHora(new Timestamp(new Date().getTime()));
             tBitacora.setBitConcepto(facPagoRequestDTO.getRequest().getConcepto());
             tBitacora.setBitCargo(facPagoRequestDTO.getRequest().getMonto() == null ? BigDecimal.ZERO : new BigDecimal(facPagoRequestDTO.getRequest().getMonto()));
-            tBitacora.setBitComision(facPagoRequestDTO.getRequest().getComision() == null ? BigDecimal.ZERO : new BigDecimal(facPagoRequestDTO.getRequest().getComision()));
+            tBitacora.setBitComision(StringUtils.isEmpty(facPagoRequestDTO.getRequest().getComision()) ? BigDecimal.ZERO : new BigDecimal(facPagoRequestDTO.getRequest().getComision()));
             tBitacora.setBitCardId(facPagoRequestDTO.getRequest().getIdTarjetaUsuario());
             tBitacora.setIdPais(facPagoRequestDTO.getIdPais());
             tBitacora.setIdEstablecimiento(facPagoRequestDTO.getRequest().getIdEstablecimiento() == null ? BigInteger.ZERO : facPagoRequestDTO.getRequest().getIdEstablecimiento());
