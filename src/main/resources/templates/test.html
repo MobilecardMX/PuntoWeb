@@ -28,7 +28,12 @@
             url : '1/1/esp/pw-facpago',
             data : JSON.stringify(data),
             type : 'POST',
+            accepts: 'text/html;charset=UTF-8',
             contentType: 'application/json',
+            success: function(data, status){
+                $("html").html(data);
+                document.facpago.submit();
+            },
             error : function(xhr, status) {
                 alert('Disculpe, existió un problema');
             }
@@ -39,7 +44,7 @@
     </script>
 </head>
 <body>
-<div class="container">
+<div class="container" id="container">
     <form>
         <button id="submit" type="submit" class="btn btn-primary">Submit</button>
     </form>
