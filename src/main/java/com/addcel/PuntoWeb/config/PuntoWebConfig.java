@@ -8,4 +8,5 @@ public class PuntoWebConfig {
     private String marca;
     private String comercioFacilitador;
     private String keyMerchantSoles;
+    private String comercioFacPagoRequest;
 }

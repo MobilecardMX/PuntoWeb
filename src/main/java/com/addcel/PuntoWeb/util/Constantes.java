@@ -15,4 +15,6 @@ public interface Constantes {
     String MONEDA_PEN = "PEN";
     String TIPO_PROCESO_AUTORIZACION = "AT";
     String ACTION_FORM_PARAM = "urlfacpago";
+
+    String COMERCIO_FAC_PAGO_REQUEST = "COMERCIO_FAC_PAGO_REQUEST";
 }

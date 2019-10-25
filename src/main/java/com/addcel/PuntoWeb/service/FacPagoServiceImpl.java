@@ -1,18 +1,17 @@
 package com.addcel.PuntoWeb.service;
 
 import com.addcel.PuntoWeb.bean.AttributeModelFacPago;
-import com.addcel.PuntoWeb.bean.FacPagoRequest;
 import com.addcel.PuntoWeb.bean.FacPagoRequestDTO;
 import com.addcel.PuntoWeb.config.PuntoWebConfig;
 import com.addcel.PuntoWeb.exception.ServiceException;
 import com.addcel.PuntoWeb.model.TarjetasUsuario;
 import com.addcel.PuntoWeb.repository.TarjetasUsuarioRepository;
-import com.addcel.PuntoWeb.service.FacPagoService;
 import com.addcel.PuntoWeb.util.Constantes;
 import com.addcel.PuntoWeb.util.Mensajes;
 import com.addcel.PuntoWeb.util.PuntoWebUtil;
 import com.addcel.utils.AddcelCrypto;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -60,8 +59,8 @@ public class FacPagoServiceImpl implements FacPagoService {
 
             model.addAttribute(AttributeModelFacPago.MARCA_TARJETA.getName(), facPagoRequestDTO.getRequest().getMarcaTarjeta());
             model.addAttribute(AttributeModelFacPago.CODIGO_SUB_COMERCION.getName(), puntoWebConfig.getComercio());
-            model.addAttribute(AttributeModelFacPago.NUM_REFERENCIA.getName(), idTBitacora);
-            model.addAttribute(AttributeModelFacPago.MONTO_TRANSACCION.getName(), facPagoRequestDTO.getRequest().getMonto());
+            model.addAttribute(AttributeModelFacPago.NUM_REFERENCIA.getName(), StringUtils.rightPad(String.valueOf(idTBitacora), 6, "0"));
+            model.addAttribute(AttributeModelFacPago.MONTO_TRANSACCION.getName(), puntoWebUtil.encryptStringPMPTDES(facPagoRequestDTO.getRequest().getMonto()));
             model.addAttribute(AttributeModelFacPago.MONEDA_TRANSACCION.getName(), Constantes.MONEDA_PEN);
 
             // obtener info de la tarjeta de la base de datos
@@ -84,7 +83,7 @@ public class FacPagoServiceImpl implements FacPagoService {
             model.addAttribute(AttributeModelFacPago.AUTOGENERADOR.getName(), System.currentTimeMillis());
             model.addAttribute(AttributeModelFacPago.DIFERIDO.getName(), facPagoRequestDTO.getRequest().getDiferido());
             model.addAttribute(AttributeModelFacPago.CUOTAS.getName(), facPagoRequestDTO.getRequest().getCuotas());
-            model.addAttribute(AttributeModelFacPago.CODIGO_COMERCIAL_FACILITADOR.getName(), puntoWebConfig.getComercio());
+            model.addAttribute(AttributeModelFacPago.CODIGO_COMERCIAL_FACILITADOR.getName(), puntoWebConfig.getComercioFacPagoRequest());
             model.addAttribute(AttributeModelFacPago.TIPO_PROCESO.getName(), Constantes.TIPO_PROCESO_AUTORIZACION);
             model.addAttribute(AttributeModelFacPago.DATA_HASH.getName(), Base64.getEncoder().encode(model.toString().getBytes()));
             model.addAttribute(AttributeModelFacPago.FIRMA_DIGITAL.getName(), Base64.getEncoder().encode("Mobilcard".getBytes()));

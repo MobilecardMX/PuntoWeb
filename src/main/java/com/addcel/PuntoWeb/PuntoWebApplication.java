@@ -80,6 +80,9 @@ public class PuntoWebApplication extends SpringBootServletInitializer {
         Optional<PuntoWebConfigParam> keyMerchantSolesOpt = puntoWebConfigParamRepository.findByKeyParam(Constantes.KEY_MERCHANT_SOLES);
         keyMerchantSolesOpt.ifPresent(keyMerchantSoles -> puntoWebConfig.setKeyMerchantSoles(keyMerchantSoles.getValueParam()));
 
+        Optional<PuntoWebConfigParam> comercioFacRequestOpt = puntoWebConfigParamRepository.findByKeyParam(Constantes.COMERCIO_FAC_PAGO_REQUEST);
+        comercioFacRequestOpt.ifPresent(comercioFacRequest -> puntoWebConfig.setComercioFacPagoRequest(comercioFacRequest.getValueParam()));
+
         return puntoWebConfig;
     }
 
