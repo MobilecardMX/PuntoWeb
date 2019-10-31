@@ -91,7 +91,7 @@ public class BitacoraServiceImpl implements BitacoraService {
     }
 
     @Override
-    public Integer saveTBitacora(PuntoWebRequestDTO puntoWebRequestDTO) {
+    public TBitacora saveTBitacora(PuntoWebRequestDTO puntoWebRequestDTO) {
         log.info("Guardando bitacora en t_bitacora...");
         TBitacora tBitacora = new TBitacora();
         try {
@@ -110,11 +110,16 @@ public class BitacoraServiceImpl implements BitacoraService {
             tBitacora.setIdEstablecimiento(puntoWebRequestDTO.getRequest().getIdEstablecimiento() == null ? BigInteger.ZERO : puntoWebRequestDTO.getRequest().getIdEstablecimiento());
             tBitacoraRepository.save(tBitacora);
             log.debug("Se guardo con EXITO la bitacora!!!");
-            return tBitacora.getIdBitacora();
+            return tBitacora;
         } catch (RuntimeException ex) {
             log.error("Ocurrio un error al guardar en T_BITACORA, mensaje: " + ex.getMessage(), ex);
-            return -1;
+            return null;
         }
+    }
+
+    @Override
+    public TBitacora updateTBitacora(TBitacora tBitacora) {
+        return tBitacoraRepository.save(tBitacora);
     }
 
     @Override

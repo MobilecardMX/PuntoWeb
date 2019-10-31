@@ -3,6 +3,7 @@ package com.addcel.PuntoWeb.service;
 import com.addcel.PuntoWeb.bean.FacPagoRequestDTO;
 import com.addcel.PuntoWeb.bean.PuntoWebRequestDTO;
 import com.addcel.PuntoWeb.model.PuntoWebBitacora;
+import com.addcel.PuntoWeb.model.TBitacora;
 
 public interface BitacoraService {
 
@@ -31,7 +32,12 @@ public interface BitacoraService {
     /**
      * Guardar en t_bitacora
      */
-    Integer saveTBitacora(PuntoWebRequestDTO puntoWebRequestDTO);
+    TBitacora saveTBitacora(PuntoWebRequestDTO puntoWebRequestDTO);
+
+    /**
+     * Update en t_bitacora
+     */
+    TBitacora updateTBitacora(TBitacora tBitacora);
 
 
     /**

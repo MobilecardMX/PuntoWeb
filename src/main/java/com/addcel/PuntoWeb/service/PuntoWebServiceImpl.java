@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.soap.SOAPException;
 
 import com.addcel.PuntoWeb.model.Establecimiento;
+import com.addcel.PuntoWeb.model.TBitacora;
 import com.addcel.PuntoWeb.repository.EstablecimientoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,15 +89,15 @@ public class PuntoWebServiceImpl implements PuntoWebService {
         log.debug("Se encontro el CODIGO_MC: " + establecimiento.getCodigoMc());
 
         //se guarda en T_BITACORA
-        Integer idTBitacora = bitacoraService.saveTBitacora(puntoWebRequestDTO);
-        if (idTBitacora > 0) {
+        TBitacora tBitacora = bitacoraService.saveTBitacora(puntoWebRequestDTO);
+        if (tBitacora != null) {
             //se guardo con exito en T_BITACORA, continua el flujo
             PuntoWebRequest request = puntoWebRequestDTO.getRequest();
             Autorizacion autorizacionBeanXML = new Autorizacion();
             // Obtener parametros del request configurados por base de datos
             autorizacionBeanXML.setMarca(puntoWebConfig.getMarca());
             autorizacionBeanXML.setComercio(puntoWebConfig.getComercio());
-            autorizacionBeanXML.setReferencia(puntoWebUtil.getReferencia(idTBitacora));
+            autorizacionBeanXML.setReferencia(puntoWebUtil.getReferencia(tBitacora.getIdBitacora()));
             autorizacionBeanXML.setMonto(puntoWebUtil.encryptStringPMPTDES(request.getMonto())); // cifrar monto
             autorizacionBeanXML.setMoneda(request.getMoneda());
 
@@ -160,7 +161,7 @@ public class PuntoWebServiceImpl implements PuntoWebService {
             try {
                 String xmlRequest = puntoWebUtil.serializeRequestToXML(autorizacionBeanXML);
                 // guardar en bitacora
-                PuntoWebBitacora bitacora = bitacoraService.saveBitacoraPuntoWeb(puntoWebRequestDTO, xmlRequest, idTBitacora);
+                PuntoWebBitacora bitacora = bitacoraService.saveBitacoraPuntoWeb(puntoWebRequestDTO, xmlRequest, tBitacora.getIdBitacora());
                 AutorizaResponse autorizaResponse = autorizacionClient.autorizacion(xmlRequest);
 
                 // deserializar XML de respuesta a Objeto Java
@@ -170,11 +171,22 @@ public class PuntoWebServiceImpl implements PuntoWebService {
 
                 com.addcel.PuntoWeb.client.response.Autorizacion response = puntoWebUtil.deserializarResponseToObject(xmlResponse);
                 log.info("response client BEAN: " + response.toString());
+                tBitacora.setTarjetaCompra(autorizacionBeanXML.getTarjeta());
 
                 // validar el codigo de respuesta de PuntoWeb
                 if (Constantes.CODE_RESPUESTA_EXITO.equals(response.getCodRespuesta())) {
                     responseServiceDTO.setAutorizacion(response);
+                    //Actualizar t_bitacora
+                    tBitacora.setBitStatus(1);
+                    tBitacora.setBitNoAutorizacion(response.getCodAutoriza());
+                    tBitacora.setBitCodigoError(null);
+                    bitacoraService.updateTBitacora(tBitacora);
                 } else {
+                    //actualizar t_bitacora con error
+                    tBitacora.setBitStatus(-1);
+                    tBitacora.setBitCodigoError("-1");
+                    bitacoraService.updateTBitacora(tBitacora);
+
                     responseServiceDTO.setExito(false);
                     responseServiceDTO.setMessage(response.getMensaje());
                 }
