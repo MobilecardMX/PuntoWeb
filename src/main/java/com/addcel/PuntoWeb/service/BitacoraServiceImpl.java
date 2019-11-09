@@ -33,7 +33,7 @@ public class BitacoraServiceImpl implements BitacoraService {
     private TBitacoraRepository tBitacoraRepository;
 
     // #### CONSTANTES ####
-    private static final String ID_PROVEEDOR = "7000";
+    private static final String ID_PROVEEDOR = "700";
     private static final BigInteger ID_PRODUCTO = new BigInteger("7100");
 
     private static final String DESCRIPCION_BITACORA = "Peticion de autorizacion al servicio Punto Web";

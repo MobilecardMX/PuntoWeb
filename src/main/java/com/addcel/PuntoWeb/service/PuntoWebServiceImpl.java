@@ -80,13 +80,13 @@ public class PuntoWebServiceImpl implements PuntoWebService {
         log.info("config param: " + puntoWebConfig.toString());
         ResponseServiceDTO responseServiceDTO = new ResponseServiceDTO();
 
-        log.debug("Validando LCPF_establecimiento.CODIGO_MC, para el id: " + puntoWebRequestDTO.getRequest().getIdEstablecimiento());
+        log.info("Validando LCPF_establecimiento.CODIGO_MC, para el id: " + puntoWebRequestDTO.getRequest().getIdEstablecimiento());
         //validar CODIGO_MC
         Establecimiento establecimiento = establecimientoRepository.findOne(puntoWebRequestDTO.getRequest().getIdEstablecimiento());
         if (establecimiento == null) {
             throw new DataInputException(Mensajes.MESSAGE_DONT_CODIGO_MC, Mensajes.CODE_DONT_CODIGO_MC);
         }
-        log.debug("Se encontro el CODIGO_MC: " + establecimiento.getCodigoMc());
+        log.info("Se encontro el CODIGO_MC: " + establecimiento.getCodigoMc());
 
         //se guarda en T_BITACORA
         TBitacora tBitacora = bitacoraService.saveTBitacora(puntoWebRequestDTO);
@@ -105,7 +105,7 @@ public class PuntoWebServiceImpl implements PuntoWebService {
             // fecha y ccv
             log.info("Autorzacion manual? " + request.isAutorizacionManual());
             if (request.isAutorizacionManual()) {
-                log.debug("Cifrando informacion de la tarjeta...");
+                log.info("Cifrando informacion de la tarjeta...");
                 if (puntoWebUtil.isValidCardData(request.getCcv(), request.getNumeroTarjeta(), request.getFechaVigencia())) {
                     String tarjeta = AddcelCrypto.decryptTarjeta(request.getNumeroTarjeta() != null ? request.getNumeroTarjeta() : "");
                     String cvc = AddcelCrypto.decryptTarjeta(request.getCcv() != null ? request.getCcv() : "");
@@ -119,7 +119,7 @@ public class PuntoWebServiceImpl implements PuntoWebService {
                 }
 
             } else {
-                log.debug("Obteniendo informacion de la tarjeta de la DB...");
+                log.info("Obteniendo informacion de la tarjeta de la DB...");
                 // obtener info de la tarjeta de la base de datos
                 Optional<TarjetasUsuario> tarjetasUsuario = Optional.ofNullable(tarjetasUsuarioRepository.findOne(request.getIdTarjetaUsuario()));
                 if (tarjetasUsuario.isPresent()) {
